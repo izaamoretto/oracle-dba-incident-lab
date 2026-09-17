@@ -1,0 +1,16 @@
+services:
+  oracle:
+    image: container-registry.oracle.com/database/free:latest
+    container_name: oracle-dba-lab
+
+    ports:
+      - "1522:1521"
+
+    environment:
+      ORACLE_PWD: OracleLab2026
+
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+
+volumes:
+  oracle_data:
