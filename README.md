@@ -1,108 +1,122 @@
-\# Oracle DBA Incident Lab
+# Oracle DBA Incident Lab
+Laboratório prático de administração, troubleshooting e performance em Oracle Database.
 
+## Objetivo:
+Simular incidentes reais de sustentação de banco de dados, realizando investigação, análise de evidências, aplicação de correções, validação dos resultados e documentação técnica.
 
+## Ambiente:
+- Oracle Database 26ai Free
+- Docker
+- SQL
+- PL/SQL
+- Windows / PowerShell
+- Git e GitHub
 
-Laboratório prático de administração e troubleshooting em Oracle Database.
+## Estrutura do projeto:
+- database/ - criação das tabelas e carga de dados
+- incidents/ - documentação dos incidentes
+- performance/ - consultas e scripts de análise de performance
+- monitoring/ - scripts de monitoramento e diagnóstico
+- evidence/ - evidências e prints das análises
 
+# Incidentes:
 
+# 20260916-INC
+Problema: lentidão em consulta de clientes por CPF.
 
-\## Objetivo
+Durante a investigação, foi identificado que a consulta realizava TABLE ACCESS FULL na tabela CLIENTES, que possuía 500.000 registros.
 
-
-
-Simular incidentes reais de sustentação de banco de dados, realizando investigação, análise de evidências, aplicação de correções e documentação técnica.
-
-
-
-\## Ambiente
-
-
-
-\- Oracle Database 26ai Free
-
-\- Docker
-
-\- SQL
-
-\- PL/SQL
-
-\- Windows / PowerShell
-
-
-
-\## Incidentes
-
-
-
-\### 20260916-INC
-
-
-
-\*\*Problema:\*\* lentidão em consulta de clientes por CPF.
-
-
-
-Durante a investigação foi identificado que a consulta realizava `TABLE ACCESS FULL` na tabela `CLIENTES`, que possuía 500.000 registros.
-
-
-
-Após análise dos índices existentes, foi constatado que a coluna `CPF` não possuía índice.
-
-
+Após análise dos índices existentes, foi constatado que a coluna CPF, utilizada como filtro altamente seletivo, não possuía índice.
 
 Foi criado o índice:
-
-
-
-CREATE INDEX idx\_clientes\_cpf
-
+CREATE INDEX idx_clientes_cpf
 ON clientes(cpf);
 
+Após a criação do índice, as estatísticas da tabela foram atualizadas e o plano de execução foi analisado novamente.
 
+O plano deixou de utilizar TABLE ACCESS FULL e passou a utilizar INDEX RANGE SCAN.
 
-Após a correção, o plano de execução passou a utilizar INDEX RANGE SCAN.
-
-
-
-\### Resultado
-
-
+## Resultado:
 
 Antes:
-
-
-
 TABLE ACCESS FULL
-
 Cost: 1572
 
-
-
 Depois:
-
-
-
 INDEX RANGE SCAN
-
 Cost: 4
 
+O tempo observado no ambiente de laboratório passou de aproximadamente 0,02s para 0,00s.
+
+O principal resultado considerado foi a mudança do plano de execução e a redução do custo estimado.
+
+---------------------------------------------------------------------------------------
+
+# 20260917-INC
+Problema: sessão bloqueada por transação aberta.
+
+Foi simulado um cenário em que uma sessão executou um UPDATE na tabela PEDIDOS e permaneceu sem executar COMMIT ou ROLLBACK.
+
+Uma segunda sessão tentou atualizar o mesmo registro e permaneceu aguardando a liberação do lock.
+
+Durante a investigação, a sessão bloqueada foi identificada através da view dinâmica V$SESSION, utilizando o campo BLOCKING_SESSION.
+
+Foi identificado que:
+- a sessão bloqueada estava em estado ACTIVE;
+- a sessão bloqueadora estava em estado INACTIVE;
+- mesmo estando inativa, a sessão bloqueadora mantinha uma transação aberta;
+- o SQL bloqueado era um UPDATE na tabela PEDIDOS.
+
+Exemplo do SQL bloqueado:
+UPDATE pedidos
+SET valor_total = 1500
+WHERE id_pedido = 1;
+
+A causa foi uma transação aberta na sessão bloqueadora, que mantinha o lock sobre o registro.
+
+A ação aplicada foi:
+COMMIT;
+
+Após o COMMIT, o lock foi liberado e a sessão bloqueada conseguiu concluir a operação normalmente.
+
+A consulta de verificação em V$SESSION deixou de retornar sessões com BLOCKING_SESSION.
+
+## Resultado:
+
+Antes:
+Sessão bloqueada identificada
+BLOCKING_SESSION preenchido
+
+Depois:
+no rows selected
+
+O incidente foi considerado resolvido após a validação de que não havia mais sessões bloqueadas.
+
+---------------------------------------------------------------------------------------
 
 
-\## Estrutura do projeto
+### Competências praticadas:
+- Oracle Database
+- SQL
+- Administração de Banco de Dados
+- Troubleshooting
+- Performance Tuning
+- Análise de plano de execução
+- Índices
+- Locks e transações
+- Monitoramento de sessões
+- Documentação de incidentes
+- Docker
+- Git e GitHub
 
 
-
-\- `database/` - criação das tabelas e carga de dados
-
-\- `incidents/` - documentação dos incidentes
-
-\- `performance/` - consultas e scripts de análise de performance
-
-\- `monitoring/` - scripts de monitoramento
-
-\- `evidence/` - evidências e prints das análises
-
-
-
-
-
+### Próximos cenários:
+Este laboratório será expandido com novos incidentes relacionados a administração e sustentação de banco de dados, como:
+- deadlocks
+- consumo de tablespace
+- análise de queries com alto consumo
+- backup e restore
+- RMAN
+- indisponibilidade de banco
+- troubleshooting de listener
+- análise de CPU, memória e I/O
