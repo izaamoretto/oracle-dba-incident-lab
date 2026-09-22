@@ -94,6 +94,38 @@ O incidente foi considerado resolvido após a validação de que não havia mais
 
 ---------------------------------------------------------------------------------------
 
+# 20260921-INC
+Problema: falha de inserção por falta de espaço em tablespace.
+
+Foi simulado um cenário em que a aplicação começou a falhar ao inserir dados devido à falta de espaço disponível no tablespace TS_INCIDENT.
+
+Durante a investigação, foi identificado o erro ORA-01653, além de um datafile limitado a 10 MB e com AUTOEXTEND OFF.
+
+O uso do tablespace estava em aproximadamente 90,63%.
+
+Como ação corretiva, foi habilitado o crescimento automático do datafile:
+ALTER DATABASE DATAFILE
+'/opt/oracle/oradata/FREE/FREEPDB1/ts_incident01.dbf'
+AUTOEXTEND ON
+NEXT 5M
+MAXSIZE 50M;
+
+Após a alteração, a carga foi executada novamente com sucesso e o datafile cresceu até 50 MB.
+
+## Resultado:
+
+Antes:
+SIZE_MB: 10
+AUTOEXTENSIBLE: NO
+ORA-01653
+
+Depois:
+SIZE_MB: 50
+AUTOEXTENSIBLE: YES
+Inserção concluída com sucesso
+
+---------------------------------------------------------------------------------------
+
 
 ### Competências praticadas:
 - Oracle Database
