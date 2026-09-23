@@ -126,6 +126,20 @@ Inserção concluída com sucesso
 
 ---------------------------------------------------------------------------------------
 
+# 20260922-INC
+Problema: Falha de conexão com Oracle. Indisponibilidade de novas conexões com o banco de dados.
+
+Foi simulado um incidente de conectividade através da interrupção do Oracle Listener. Durante a investigação, uma tentativa de conexão retornou o erro 'ORA-12541: No listener'.
+
+Através do 'lsnrctl status', foi confirmada a indisponibilidade do Listener. Uma conexão administrativa local permitiu verificar que a instância Oracle permanecia 'OPEN' e o banco 'ACTIVE'.
+
+Como ação corretiva, o Listener foi reiniciado utilizando 'lsnrctl start'. Após a correção, uma nova conexão TCP com o serviço 'FREEPDB1' foi estabelecida com sucesso.
+
+## Resultado:
+Conectividade restabelecida sem necessidade de reiniciar o banco de dados.
+
+---------------------------------------------------------------------------------------
+
 
 ### Competências praticadas:
 - Oracle Database
