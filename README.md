@@ -140,6 +140,23 @@ Conectividade restabelecida sem necessidade de reiniciar o banco de dados.
 
 ---------------------------------------------------------------------------------------
 
+# 20260922-INC-005
+Problema: Backup e recuperação com RMAN. Simulação de perda de dados e validação de procedimentos de recuperação no Oracle.
+
+Foi realizado um backup completo com RMAN, incluindo archived redo logs, seguido da validação dos backups.
+
+Durante o laboratório, foi identificada uma limitação do Oracle Free ('ORA-00441') ao tentar recuperar uma tabela por meio de uma instância auxiliar.
+
+Como alternativa, foi realizada a restauração física de uma cópia do datafile do tablespace `USERS` em um diretório separado, preservando o banco original.
+
+Também foi simulada a exclusão acidental de uma tabela contendo três registros, posteriormente recuperada utilizando Flashback e a Recycle Bin do Oracle.
+
+## Resultado:
+Backup validado, restauração física com RMAN concluída e recuperação lógica da tabela realizada com sucesso.
+
+
+---------------------------------------------------------------------------------------
+
 
 ### Competências praticadas:
 - Oracle Database
