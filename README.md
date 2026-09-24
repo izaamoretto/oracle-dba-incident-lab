@@ -154,6 +154,20 @@ Também foi simulada a exclusão acidental de uma tabela contendo três registro
 ## Resultado:
 Backup validado, restauração física com RMAN concluída e recuperação lógica da tabela realizada com sucesso.
 
+---------------------------------------------------------------------------------------
+
+# 20260923-INC
+Problema: Investigação de consumo de CPU e I/O. Investigação de uma consulta SQL com potencial consumo elevado de recursos.
+
+Foi analisada uma consulta que percorre 500 mil registros da tabela 'CLIENTES', utilizando 'AUTOTRACE', planos de execução e a view 'V$SQL' para investigar o consumo de CPU, leituras lógicas e físicas.
+
+Durante os testes, foram observadas 5.796 leituras lógicas, além de leituras físicas nas primeiras execuções. O plano apresentou 'TABLE ACCESS FULL', 'HASH GROUP BY e 'SORT ORDER BY'.
+
+Uma alternativa para o cálculo de caracteres também foi testada, mas não demonstrou melhoria significativa.
+
+## Resultado:
+Investigação concluída sem evidências suficientes de um gargalo que justificasse alterações na consulta ou criação de novos índices.
+
 
 ---------------------------------------------------------------------------------------
 
