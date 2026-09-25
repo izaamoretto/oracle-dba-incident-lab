@@ -168,6 +168,18 @@ Uma alternativa para o cálculo de caracteres também foi testada, mas não demo
 ## Resultado:
 Investigação concluída sem evidências suficientes de um gargalo que justificasse alterações na consulta ou criação de novos índices.
 
+---------------------------------------------------------------------------------------
+
+20260924-INC
+Problema: Investigação de sessões e conexões Oracle. Simulação controlada de diagnóstico de conexões de uma aplicação.
+
+Foi analisada a utilização de sessões e processos do Oracle por meio das views 'V$RESOURCE_LIMIT' e 'V$SESSIO'. Durante o laboratório, uma conexão do usuário 'APP_VENDAS' foi mantida inativa e monitorada utilizando a coluna 'LAST_CALL_ET'.
+
+A sessão foi identificada pelo SID e SERIAL#, permaneceu inativa por 277 segundos durante a coleta de evidências e foi encerrada normalmente pelo SQL*Plus. Uma nova consulta confirmou que a sessão não estava mais presente no banco.
+
+## Resultado:
+Monitoramento e encerramento controlado concluídos. Não houve esgotamento real do limite de sessões nem necessidade de alterações nos parâmetros do Oracle.
+
 
 ---------------------------------------------------------------------------------------
 
