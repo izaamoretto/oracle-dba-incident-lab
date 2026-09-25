@@ -170,7 +170,7 @@ Investigação concluída sem evidências suficientes de um gargalo que justific
 
 ---------------------------------------------------------------------------------------
 
-20260924-INC
+# 20260924-INC
 Problema: Investigação de sessões e conexões Oracle. Simulação controlada de diagnóstico de conexões de uma aplicação.
 
 Foi analisada a utilização de sessões e processos do Oracle por meio das views 'V$RESOURCE_LIMIT' e 'V$SESSIO'. Durante o laboratório, uma conexão do usuário 'APP_VENDAS' foi mantida inativa e monitorada utilizando a coluna 'LAST_CALL_ET'.
@@ -184,28 +184,25 @@ Monitoramento e encerramento controlado concluídos. Não houve esgotamento real
 ---------------------------------------------------------------------------------------
 
 
-### Competências praticadas:
-- Oracle Database
-- SQL
-- Administração de Banco de Dados
-- Troubleshooting
-- Performance Tuning
-- Análise de plano de execução
-- Índices
-- Locks e transações
-- Monitoramento de sessões
-- Documentação de incidentes
-- Docker
-- Git e GitHub
+## Competências praticadas:
+- Administração de Oracle Database 26ai Free
+- SQL, planos de execução e Performance Tuning
+- Índices, locks e transações
+- Administração de tablespaces e datafiles
+- Diagnóstico dos erros ORA-01653 e ORA-12541
+- Gerenciamento do Oracle Listener
+- Backup e restauração física com RMAN
+- Recuperação com Flashback Table e Recycle Bin
+- Monitoramento de CPU, leituras lógicas e físicas
+- Análise de sessões com V$SESSION e V$RESOURCE_LIMIT
+- Troubleshooting e documentação técnica
+- Docker, PowerShell, Git e GitHub
 
 
-### Próximos cenários:
-Este laboratório será expandido com novos incidentes relacionados a administração e sustentação de banco de dados, como:
-- deadlocks
-- consumo de tablespace
-- análise de queries com alto consumo
-- backup e restore
-- RMAN
-- indisponibilidade de banco
-- troubleshooting de listener
-- análise de CPU, memória e I/O
+## Próximos cenários:
+- Deadlocks: identificação de sessões envolvidas e análise de trace files.
+- Monitoramento preventivo: scripts para acompanhar tablespaces, sessões e recursos.
+- Segurança: gerenciamento de usuários, permissões e auditoria.
+- RMAN: automatização de backups e novos testes de recuperação.
+- Performance: investigação de consultas com consumo elevado e comparação de planos.
+- Automação: scripts em PowerShell ou Bash para verificações operacionais.
