@@ -180,6 +180,17 @@ A sessão foi identificada pelo SID e SERIAL#, permaneceu inativa por 277 segund
 ## Resultado:
 Monitoramento e encerramento controlado concluídos. Não houve esgotamento real do limite de sessões nem necessidade de alterações nos parâmetros do Oracle.
 
+---------------------------------------------------------------------------------------
+
+# 20260925-INC
+Problema: Falha de acesso por ausência de privilégio. Aplicação sem permissão para consultar uma tabela Oracle.
+
+Foi simulada uma falha de acesso em que o usuário 'APP_RELATORIOS' tentou consultar a tabela 'SYSTEM.INC008_RELATORIO' e recebeu 'ORA-00942'.
+
+A investigação utilizou a view 'DBA_TAB_PRIVS' para verificar os privilégios do usuário. Após confirmar a ausência da permissão necessária, foi concedido exclusivamente o privilégio 'SELECT', seguindo o princípio do menor privilégio.
+
+## Resultado:
+Acesso de leitura restabelecido e validado, sem conceder permissões administrativas ou reiniciar o banco.
 
 ---------------------------------------------------------------------------------------
 
